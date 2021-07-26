@@ -1,5 +1,7 @@
 # Jest tools
 
+Making it easier to test
+
 ### Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
