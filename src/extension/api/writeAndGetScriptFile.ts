@@ -1,7 +1,8 @@
 import { writeFileSync } from 'fs';
-import * as tempy from 'tempy';
+import * as temp from 'temp-dir';
+import { join } from 'path';
 export default function(port: number) {
-    const path = tempy.file({ name: 'jest-tools.js' });
+    const path = join(temp, 'jest-tools.js');
     const content = `function send(content) {
         try {
           var xhr = new XMLHttpRequest();
