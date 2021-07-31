@@ -36,7 +36,7 @@ export async function startApiServer(
     app.post('/document', function(req, res) {
         (req.body.logs || []).forEach((log: string) => {
             logs.push({
-                id: new Date().getUTCMilliseconds().toString(),
+                id: new Date().valueOf().toString(),
                 content: log,
             });
         });

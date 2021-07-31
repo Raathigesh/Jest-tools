@@ -20,6 +20,8 @@ interface Props {
     onCurrentLogChange: (log: number) => void;
 }
 
+const port = (window as any).port || '4545';
+
 export function HtmlInspector({
     html,
     id,
@@ -94,7 +96,9 @@ export function HtmlInspector({
                         height="calc(100vh - 200px)"
                         backgroundColor="white"
                     >
-                        <div dangerouslySetInnerHTML={{ __html: html }}></div>
+                        <iframe
+                            src={`http://localhost:${port}/preview/${id}`}
+                        ></iframe>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
@@ -104,7 +108,7 @@ export function HtmlInspector({
                 justifyContent="flex-end"
             >
                 <Link
-                    href={`http://localhost:4545/preview/${id}`}
+                    href={`http://localhost:${port}/preview/${id}`}
                     isExternal
                     marginRight="15px"
                     color="white"
