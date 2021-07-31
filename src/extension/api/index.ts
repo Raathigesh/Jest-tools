@@ -34,9 +34,11 @@ export async function startApiServer(
     let logs: { id: string; content: string }[] = [];
 
     app.post('/document', function(req, res) {
-        logs.push({
-            id: new Date().getUTCMilliseconds().toString(),
-            content: req.body.content,
+        (req.body.logs || []).forEach((log: string) => {
+            logs.push({
+                id: new Date().getUTCMilliseconds().toString(),
+                content: log,
+            });
         });
 
         res.send('OK');
@@ -48,7 +50,7 @@ export async function startApiServer(
 
     app.get('/getArgs', (req, res) => {
         res.json({
-            args: `--setupTestFrameworkScriptFile=${scriptPath}`,
+            args: `--verbose=false --reporters=default ${scriptPath}`,
         });
     });
 

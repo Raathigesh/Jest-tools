@@ -3,24 +3,52 @@ import * as temp from 'temp-dir';
 import { join } from 'path';
 export default function(port: number) {
     const path = join(temp, 'jest-tools.js');
-    const content = `function send(content) {
-        try {
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://localhost:${port}/document', false);
-          xhr.setRequestHeader('Content-type', 'application/json');
-          xhr.send(JSON.stringify({ content: content }));
-        } catch (e) {}
+    const content = `const http = require('http');
+
+    function send(logs) {
+      const data = JSON.stringify({
+        logs,
+      });
+
+      const options = {
+        hostname: 'localhost',
+        port: ${port},
+        path: '/document',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(data),
+        },
+      };
+
+      const req = http.request(options);
+      req.write(data);
+      req.end();
+    }
+
+    class MyCustomReporter {
+      constructor(globalConfig, options) {
+        this._globalConfig = globalConfig;
+        this._options = options;
       }
 
-      const backlogLog = console.log;
-      console.log = (...args) => {
-        if (args.length > 0 && args[0] !== null && args[0] !== undefined && typeof args[0] === 'object' && args[0].hasOwnProperty('html')) {
-          send(args[0].html);
-        } else {
-          backlogLog(...args);
-        }
-      };
-      `;
+      onTestStart(test) {}
+      onTestResult(test, testResult, aggregatedResult) {
+        const logs = testResult.console || [];
+        const objectLikeMessages = logs
+          .map((log) => log.message)
+          .filter((log) => log.startsWith('<') && log.endsWith('>'));
+        console.log(objectLikeMessages);
+
+        send(objectLikeMessages);
+      }
+
+      onRunStart(results) {}
+      onRunComplete(contexts, results) {}
+    }
+
+    module.exports = MyCustomReporter;
+    `;
     writeFileSync(path, content);
 
     return path;
