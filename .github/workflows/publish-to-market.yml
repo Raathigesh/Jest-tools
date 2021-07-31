@@ -15,7 +15,7 @@ jobs:
                   node-version: 10.x
             - name: yarn install, build, and test
               run: |
-                  yarn install
+                  yarn install --ignore-engines
                   yarn build
             - uses: lannonbr/vsce-action@master
               with:
