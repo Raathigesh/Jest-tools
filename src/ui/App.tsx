@@ -4,11 +4,12 @@ import {
     GlobalStyle,
     theme as defaultTheme,
 } from '@chakra-ui/react';
-
 import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { ThemeProvider } from '@devtools-ds/themes';
+import copy from 'copy-to-clipboard';
 import Header from './Header';
 import InitialScreen from './InitialScreen';
-import { LogsPanel } from './LogsPanel';
+import { HtmlInspector } from './HtmlInspector';
 
 const theme = {
     ...defaultTheme,
@@ -21,39 +22,76 @@ const theme = {
     },
 };
 
+const API_URL = `http://localhost:${(window as any).port || '4545'}`;
+
 function App() {
     const [logs, setLogs] = useState<{ id: string; content: string }[]>([]);
     const [args, setArgs] = useState('');
+    const [selectedLogIndex, setSelectedLogIndex] = useState<null | number>(
+        null
+    );
 
     async function clearAll() {
-        await fetch('http://localhost:4545/clear');
+        await fetch(`${API_URL}/clear`);
         setLogs([]);
+        setSelectedLogIndex(null);
     }
 
-    useEffect(() => {
-        setInterval(() => {
-            fetch('http://localhost:4545/document')
-                .then(r => r.json())
-                .then(res => setLogs(res.logs));
-        }, 2000);
+    function copyArgs() {
+        copy(args);
+    }
 
-        fetch('http://localhost:4545/getArgs')
+    const selectedLog =
+        selectedLogIndex !== null ? logs[selectedLogIndex] : null;
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            fetch(`${API_URL}/document`)
+                .then(r => r.json())
+                .then(res => {
+                    setLogs(res.logs);
+                    console.log('DAta', selectedLogIndex);
+                    if (res.logs.length > 0 && selectedLogIndex === null) {
+                        setSelectedLogIndex(res.logs.length - 1);
+                    }
+                });
+        }, 3000);
+
+        return () => clearInterval(intervalId);
+    }, [selectedLogIndex]);
+
+    useEffect(() => {
+        fetch(`${API_URL}/getArgs`)
             .then(r => r.json())
             .then(res => setArgs(res.args));
     }, []);
 
     return (
-        <ChakraProvider theme={theme}>
-            <GlobalStyle />
-            <Flex flexDir="column" backgroundColor="#F2F2F2" height="100vh">
-                <Header onClearAll={clearAll} />
-                {logs.length === 0 ? (
-                    <InitialScreen args={args} />
-                ) : (
-                    <LogsPanel logs={logs} />
-                )}
-            </Flex>
-        </ChakraProvider>
+        <ThemeProvider theme={'chrome'} colorScheme={'dark'}>
+            <ChakraProvider theme={theme}>
+                <GlobalStyle />
+                <Flex flexDir="column" height="100vh" backgroundColor="#23232C">
+                    <Header
+                        onClearAll={clearAll}
+                        onCopyArgs={copyArgs}
+                        showClearIcon={logs.length > 0}
+                    />
+                    {selectedLog === null ? (
+                        <InitialScreen args={args} />
+                    ) : (
+                        <HtmlInspector
+                            html={selectedLog && selectedLog.content}
+                            id={selectedLog && selectedLog.id}
+                            currentLog={selectedLogIndex || 0}
+                            totalLogs={logs.length}
+                            onCurrentLogChange={index => {
+                                setSelectedLogIndex(index);
+                            }}
+                        />
+                    )}
+                </Flex>
+            </ChakraProvider>
+        </ThemeProvider>
     );
 }
 

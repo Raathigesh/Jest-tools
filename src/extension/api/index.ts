@@ -57,6 +57,13 @@ export async function startApiServer(
         res.send('OK');
     });
 
+    app.get('/preview/:id', (req, res) => {
+        const id = req.params.id;
+        const item = logs.find(l => l.id === id);
+        res.append('content-type', 'text/html; charset=utf-8');
+        res.send(item?.content);
+    });
+
     return new Promise((resolve, reject) => {
         app.listen(port, () => {
             const url = `http://localhost:${port}`;

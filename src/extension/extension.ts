@@ -2,6 +2,7 @@ require('module-alias/register');
 import * as vscode from 'vscode';
 import ContentProvider from './ContentProvider';
 import { startApiServer } from './api';
+import { join } from 'path';
 const getPort = require('get-port');
 
 let isServerRunning = false;
@@ -34,6 +35,11 @@ async function initialize(context: vscode.ExtensionContext) {
         vscode.ViewColumn.Two,
         { enableScripts: true }
     );
+    const root = join(context.extensionPath, 'icons');
+    panel.iconPath = {
+        dark: vscode.Uri.file(join(root, 'tiny.png')),
+        light: vscode.Uri.file(join(root, 'tiny.png')),
+    };
 
     const contentProvider = new ContentProvider();
     panel.webview.html = contentProvider.getContent(port);

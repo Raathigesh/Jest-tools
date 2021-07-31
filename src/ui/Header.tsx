@@ -1,39 +1,45 @@
-import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
+import { Flex, Tooltip } from '@chakra-ui/react';
 import React from 'react';
 import { Trash, Copy } from 'react-feather';
+import IconButtonInternal from './components/IconButton';
+import logo from '../ui/assets/logo.png';
 
 interface Props {
     onClearAll: () => void;
+    onCopyArgs: () => void;
+    showClearIcon: boolean;
 }
 
-export default function Header({ onClearAll }: Props) {
+export default function Header({
+    onClearAll,
+    onCopyArgs,
+    showClearIcon,
+}: Props) {
     return (
         <Flex
-            padding="10px"
+            padding="15px"
             justifyContent="space-between"
-            backgroundColor="#FCFCFC"
-            boxShadow="1px 1px 2px #d4d4d4"
+            backgroundColor="#1A1C22"
         >
-            <Flex fontSize="18px" alignItems="center">
-                Jest tools
+            <Flex fontSize="18px" alignItems="center" color="#EFF4F8">
+                <img
+                    src={logo}
+                    style={{ height: '30px', marginLeft: '-10px' }}
+                />
             </Flex>
-            <Flex>
-                <Tooltip label="Clear all logs">
-                    <IconButton
+            <Flex alignItems="center">
+                {showClearIcon && (
+                    <IconButtonInternal
                         onClick={onClearAll}
-                        aria-label="Clear all"
-                        icon={<Trash size={12} />}
-                        size="sm"
-                        marginRight="10px"
+                        Icon={Trash}
+                        tooltip="Clear all logs"
                     />
-                </Tooltip>
-                <Tooltip label="Copy Jest args">
-                    <IconButton
-                        aria-label="Copy Jest args"
-                        icon={<Copy size={12} />}
-                        size="sm"
-                    />
-                </Tooltip>
+                )}
+                <IconButtonInternal
+                    onClick={onCopyArgs}
+                    Icon={Copy}
+                    tooltip="Copy Jest args"
+                />
             </Flex>
         </Flex>
     );
