@@ -1,4 +1,3 @@
-require('module-alias/register');
 import * as vscode from 'vscode';
 import ContentProvider from './ContentProvider';
 import { startApiServer } from './api';

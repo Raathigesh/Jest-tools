@@ -12,7 +12,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/Raathigesh/waypoint"
+        "url": "https://github.com/Raathigesh/Jest-tools"
     },
     "icon": "icons/icon.png",
     "galleryBanner": {
@@ -110,14 +110,10 @@
         "cors": "^2.8.5",
         "express": "^4.17.1",
         "get-port": "^5.1.1",
+        "is-path-in-cwd": "^4.0.0",
         "module-alias": "^2.2.0",
         "react": "^16.8.6",
         "tempy": "^1.0.1"
-    },
-    "_moduleAliases": {
-        "common": "./out/common",
-        "entities": "./out/entities",
-        "indexer": "./out/indexer"
     },
     "husky": {
         "hooks": {
