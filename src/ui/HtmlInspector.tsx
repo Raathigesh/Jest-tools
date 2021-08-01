@@ -97,6 +97,7 @@ export function HtmlInspector({
                         backgroundColor="white"
                     >
                         <iframe
+                            style={{ height: '100%', width: '100%' }}
                             src={`http://localhost:${port}/preview/${id}`}
                         ></iframe>
                     </TabPanel>

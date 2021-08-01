@@ -1,4 +1,4 @@
-<img src="./icons/Github banner.png">
+<img src="https://raw.githubusercontent.com/Raathigesh/Jest-tools/main/icons/Github%20banner.png">
 
 Jest tools let you inspect html from your Jest tests with ease when logging to console is not enough.
 
