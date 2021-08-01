@@ -1,5 +1,5 @@
 {
-  "projectName": "jest-tools",
+  "projectName": "Jest tools",
   "projectOwner": "Raathigesh",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -13,15 +13,16 @@
     {
       "login": "Raathigesh",
       "name": "Raathi Kugarajan",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/3108160?v=4",
-      "profile": "https://twitter.com/Raathigesh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3108160?v=4",
+      "profile": "https://github.com/Raathigesh",
       "contributions": [
         "code",
         "doc",
-        "test"
+        "ideas",
+        "infra",
+        "maintenance"
       ]
-    },
+    }
   ],
-  "contributorsPerLine": 7,
-  "skipCi": true
+  "contributorsPerLine": 7
 }
