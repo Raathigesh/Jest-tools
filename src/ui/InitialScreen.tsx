@@ -35,7 +35,9 @@ export default function InitialScreen({ args }: Props) {
             color="white"
             flexDir="column"
         >
-            <Flex fontSize="20px">Starting Jest</Flex>
+            <Flex fontSize="18px" fontWeight={600}>
+                Starting Jest
+            </Flex>
             <Flex flexDir="column" width="500px">
                 <Flex>Append the following args when you start Jest</Flex>
                 <Code>{args}</Code>
@@ -45,17 +47,15 @@ export default function InitialScreen({ args }: Props) {
                 Now you have to append an additional argument as below.
                 <Code>yarn test {args}</Code>
             </Flex>
-            <Flex fontSize="20px">Inspecting html</Flex>
+            <Flex fontSize="18px" marginTop="20px" fontWeight={600}>
+                Inspecting html
+            </Flex>
             <Flex flexDir="column" width="500px">
                 <Flex>
-                    Console.log() an object with html attribute which contains
-                    the html string and it will appear in Jest tools inspector.
+                    Console.log() any html string and it will appear in Jest
+                    tools inspector.
                 </Flex>
-                <Code>
-                    {`console.log({
-                        html:  document.body.innerHTML
-                    })`}
-                </Code>
+                <Code>{`console.log(document.body.innerHTML)`}</Code>
             </Flex>
         </Flex>
     );
