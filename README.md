@@ -1,12 +1,12 @@
 <img src="./icons/Github banner.png">
 
-Jest tools let you inspect html with ease when simple logging to console is not enough.
+Jest tools let you inspect html from your Jest tests with ease when logging to console is not enough.
 
 ## Getting started
 
 -   Install the [VSCode extension.](https://marketplace.visualstudio.com/items?itemName=Raathigeshan.jest-tools)
--   From VSCode's command palette run the `Jest tools: Start jest tools`
--   This will show you the Jest tools UI. **The initial screen will ask you to start Jest with additional command line arguments (A custom jest reporter to capture logs).**
+-   From VSCode's command palette, run the `Jest tools: Start jest tools` command.
+-   This will show you the Jest tools UI. **The initial screen will ask you to start Jest with additional command line arguments (A custom jest reporter to capture console logs).**
 -   Then simply `console.log()` a html string and it will show up in the inspector.
 
 ### An example usage
@@ -18,7 +18,7 @@ import { render } from '@testing-library/react';
 
 test('should work', () => {
     render(<App />);
-    console.log(document.body.innerHtml); // this html will shown in jest tool's inspector
+    console.log(document.body.innerHtml); // this html will appear in jest tools
 });
 ```
 
