@@ -38,7 +38,6 @@ export default function(port: number) {
         const objectLikeMessages = logs
           .map((log) => log.message)
           .filter((log) => log.startsWith('<') && log.endsWith('>'));
-        console.log(objectLikeMessages);
 
         send(objectLikeMessages);
       }
